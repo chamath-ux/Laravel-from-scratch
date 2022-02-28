@@ -47,7 +47,51 @@
                         <p>{{$post->body}}</p>
                     </div>
                 </div>
+                @auth
+
+
+                    <section class='col-span-8 col-start-5 space-y-6'>
+
+                            <form method='POST' action='/post/{{$post->slug}}/comments' class='mb-10 border border-gray-400 py-3 px-3 rounded-2xl'>
+
+                                @csrf
+
+                                <header class='flex items-center'>
+
+                                    <img src="https://i.pravatar.cc/40" class='rounded-2xl'/>
+                                    <h2 class='item-center ml-4'>Whats On your Mind?</h2>
+
+                                </header>
+                                <div class='mt-4'>
+                                    <textarea  name='body' cols='10' rows='10' placeholder='Say something!' class='w-full'></textarea>
+                                    @error('body')
+                                        <span class='text-red-500'>{{$message}}</span>
+                                    @enderror
+                                </div>
+                                <div class='flex justify-end'>
+                                   <x-button>Post</x-button>
+                                </div>
+                            </form>
+
+                    </section>
+
+                    @else
+                    <section class='col-span-8 col-start-5 space-y-6'>
+                        <p class='mb-6'>
+                        <a href="/register" class='text-blue-700 font-bold'>Register</a> Or <a href='/login' class='text-blue-700 font-bold'>Login</a> To get participate in comments!
+                        </p>
+                    </section>
+                @endauth
+                <section class='col-span-8 col-start-5 space-y-6'>
+
+                    @foreach ($post->comments as $comment)
+                        <x-post-comment1 :comment='$comment' />
+                    @endforeach
+
+
+                </section>
             </article>
+
         </main>
     </section>
 </x-layout>

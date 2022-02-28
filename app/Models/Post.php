@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
@@ -11,7 +12,12 @@ class Post extends Model
 
     protected $fillable =['title','body','slug','category_id'];
 
-    protected $with = ['category','author'];
+    protected $with = ['category','author','comments'];
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
     public function category()
     {
